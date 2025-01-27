@@ -121,15 +121,15 @@ public class App extends JFrame implements KeyListener {
     }
     
     private void racketDraw(Graphics g) {
-    
+        
         switch (key){
             case KeyEvent.VK_UP:{
-                if (racket.y>23)
+                if (racket.y > (windowHeight - windowHeight)+40)
                 racket.y=racket.y-6;
                 break;
             }    
             case KeyEvent.VK_DOWN:{
-                if (racket.y<windowHeight-78)
+                if (racket.y < windowHeight-100)
                 racket.y=racket.y+6;
                 break;
             }
@@ -137,6 +137,7 @@ public class App extends JFrame implements KeyListener {
                 System.exit(0);
             }    
         }
+        
         g.setColor(Color.RED);
         g.fillRect(75, racket.y, 15, racket.alto);
         g.fillRect(910, racket.y, 15, racket.alto);
@@ -154,6 +155,12 @@ public class App extends JFrame implements KeyListener {
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Arial", Font.BOLD, 18));
         g.drawString("Resultado: " + (Good - Bad), 20, 90);
+        
+        
+        
+        g.setColor(Color.LIGHT_GRAY);
+        g.setFont(new Font("Arial", Font.BOLD, 18));
+        g.drawString("Y Position: " + racket.y, 20, 120);
     }
     
     private void sleep(){
