@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+
 import javax.swing.JFrame;
 
 
@@ -188,3 +189,5 @@ public class App extends JFrame implements KeyListener {
   
 //Привет, Габриель
 //Leka Formasster
+
+//Привет Алеся, Как вы
