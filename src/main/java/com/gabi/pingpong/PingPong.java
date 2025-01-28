@@ -23,3 +23,4 @@ public class PingPong {
         new App();
     }
 }
+//awt es la biblioteca propia de java, no?
