@@ -8,13 +8,17 @@ package com.gabi.pingpong;
  *
  * @author alu15d
  */
-public class Racket {
+public class Field {
     
     public int y;
-    public int alto;
-   
-    public Racket(int y, int alto) {
+    public int x;
+    public int height;
+    public int width;
+    
+    public Field(int x, int y, int height, int width) {
+        this.x = x;
         this.y = y;
-        this.alto = alto;
-    }     
+        this.height = height;
+        this.width = width;
+    }
 }

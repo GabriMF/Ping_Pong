@@ -1,4 +1,5 @@
 com\gabi\pingpong\Ball.class
 com\gabi\pingpong\App.class
 com\gabi\pingpong\Racket.class
+com\gabi\pingpong\Field.class
 com\gabi\pingpong\PingPong.class

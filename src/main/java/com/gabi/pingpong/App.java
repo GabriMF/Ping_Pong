@@ -26,6 +26,7 @@ public class App extends JFrame implements KeyListener {
     private int windowHeight = 800;
     private Ball ball;
     private Racket racket;
+    private Field field;
     
     private int key=0;
     private long goal;
@@ -57,6 +58,7 @@ public class App extends JFrame implements KeyListener {
         
         ball = new Ball(windowWidth/2, windowHeight/2, 3, -3);
         racket = new Racket(windowHeight/2, 80);
+        //field = new Field(50, 50, windowHeight - 100, windowWidth - 100);
     }
    
     private void ball() {
@@ -104,9 +106,11 @@ public class App extends JFrame implements KeyListener {
             g.setColor(Color.black);
             g.fillRect(0, 0, windowWidth, windowHeight);
             
+//            fieldDraw(g);
             score(g);
             ballDraw(g);
             racketDraw(g);
+            
             
         } finally {
             g.dispose();
@@ -120,15 +124,21 @@ public class App extends JFrame implements KeyListener {
         g.setColor(Color.CYAN);
         g.fillOval(ball.x, ball.y, 20, 20);
     }
-    
+/*    
+    private void fieldDraw(Graphics g){
+        g.setColor(Color.blue);
+        g.fillRect(field.x, field.y, field.width, field.height);
+    }
+*/    
     private void racketDraw(Graphics g) {
         
         switch (key){
             case KeyEvent.VK_UP:{
-                if (racket.y > (windowHeight - windowHeight)+40)
+                if (racket.y > (windowHeight - windowHeight) + 40)
                 racket.y=racket.y-6;
                 break;
-            }    
+            }   
+            
             case KeyEvent.VK_DOWN:{
                 if (racket.y < windowHeight-100)
                 racket.y=racket.y+6;
@@ -178,7 +188,7 @@ public class App extends JFrame implements KeyListener {
     
     @Override
     public void keyReleased(KeyEvent e){
-        
+        key = e.getKeyCode();
     }
     
     @Override
