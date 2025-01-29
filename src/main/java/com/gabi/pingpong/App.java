@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.gabi.pingpong;
 
 import java.awt.Color;
@@ -22,11 +19,12 @@ import javax.swing.JFrame;
 
 public class App extends JFrame implements KeyListener {
     
-    private int windowWidth = 1000;
+    private int windowWidth = 1366;
     private int windowHeight = 800;
     private Ball ball;
     private Racket racket;
-    private Field field;
+    private Field fieldOut;
+    private Field fieldIn;
     
     private int key=0;
     private long goal;
@@ -58,7 +56,8 @@ public class App extends JFrame implements KeyListener {
         
         ball = new Ball(windowWidth/2, windowHeight/2, 3, -3);
         racket = new Racket(windowHeight/2, 80);
-        //field = new Field(50, 50, windowHeight - 100, windowWidth - 100);
+        fieldOut = new Field(50, 50, windowHeight - 100, windowWidth - 100);
+        fieldIn = new Field(60, 60, windowHeight - 120, windowWidth - 120);
     }
    
     private void ball() {
@@ -68,26 +67,27 @@ public class App extends JFrame implements KeyListener {
        
         checkCollision();
         
-        if(ball.x <= 0 || ball.x >= windowWidth - 40){
+        if(ball.x <= fieldIn.x || ball.x >= fieldIn.width+30){
             ball.veloX = -ball.veloX;
             Bad++;
         }
         
-        if(ball.y <= 20 || ball.y >= (windowHeight - 40))
+        if(ball.y <= fieldIn.y || ball.y >= fieldIn.height + 30){
             ball.veloY = -ball.veloY;
+        }
         
         drawScreen();
     }   
     
     private void checkCollision(){
-        if ( (ball.x <= 75 && ball.x >= 60) && (ball.y > racket.y) && (ball.y < racket.y + racket.alto)){
+        if ( (ball.x <= fieldIn.x + 45 && ball.x >= fieldIn.x + 15) && (ball.y > racket.y) && (ball.y < racket.y + racket.alto)){
             if (ball.veloX < 0){
                 Good++;
             }
             ball.veloX = -ball.veloX;
         }
         
-        if ( (ball.x >= 895 && ball.x <= 910) && (ball.y > racket.y) && (ball.y < racket.y + racket.alto)){
+        if ( (ball.x >= fieldIn.width - 20 && ball.x <= fieldIn.width - 5) && (ball.y > racket.y) && (ball.y < racket.y + racket.alto)){
             if (ball.veloX > 0){
                 Good++;
             }
@@ -106,7 +106,8 @@ public class App extends JFrame implements KeyListener {
             g.setColor(Color.black);
             g.fillRect(0, 0, windowWidth, windowHeight);
             
-//            fieldDraw(g);
+            fieldOutDraw(g);
+            fieldInDraw(g);
             score(g);
             ballDraw(g);
             racketDraw(g);
@@ -124,34 +125,42 @@ public class App extends JFrame implements KeyListener {
         g.setColor(Color.CYAN);
         g.fillOval(ball.x, ball.y, 20, 20);
     }
-/*    
-    private void fieldDraw(Graphics g){
+    
+    private void fieldOutDraw(Graphics g){
         g.setColor(Color.blue);
-        g.fillRect(field.x, field.y, field.width, field.height);
+        g.fillRect(fieldOut.x, fieldOut.y, fieldOut.width, fieldOut.height);
     }
-*/    
+    
+    private void fieldInDraw(Graphics g){
+        g.setColor(Color.white);
+        g.fillRect(fieldIn.x, fieldIn.y, fieldIn.width, fieldIn.height);
+    }
+    
     private void racketDraw(Graphics g) {
         
         switch (key){
             case KeyEvent.VK_UP:{
-                if (racket.y > (windowHeight - windowHeight) + 40)
-                racket.y=racket.y-6;
+                if (racket.y > (windowHeight - windowHeight) + 80){
+                    racket.y=racket.y-6;
+                }
+                
                 break;
-            }   
+            }
             
             case KeyEvent.VK_DOWN:{
-                if (racket.y < windowHeight-100)
-                racket.y=racket.y+6;
+                if (racket.y < windowHeight-160){
+                    racket.y=racket.y+6;
+                }
                 break;
             }
             case KeyEvent.VK_E:{
                 System.exit(0);
             }    
         }
-        
+
         g.setColor(Color.RED);
-        g.fillRect(75, racket.y, 15, racket.alto);
-        g.fillRect(910, racket.y, 15, racket.alto);
+        g.fillRect(fieldIn.x +30, racket.y, 15, racket.alto);
+        g.fillRect(fieldIn.width - 5, racket.y, 15, racket.alto);
     }
     
     private void score(Graphics g){
